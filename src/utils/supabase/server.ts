@@ -1,8 +1,10 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type cookies } from "next/headers";
 
-export const createClient = (cookieStore: ReturnType<typeof cookies>) => {
-  return createServerClient(
+export function createClient<TDatabase = unknown>(
+  cookieStore: ReturnType<typeof cookies>,
+) {
+  return createServerClient<TDatabase>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -33,4 +35,4 @@ export const createClient = (cookieStore: ReturnType<typeof cookies>) => {
       },
     },
   );
-};
+}
