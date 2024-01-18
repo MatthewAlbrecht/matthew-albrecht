@@ -1,61 +1,71 @@
-"use server";
+import "server-only";
 import { cookies } from "next/headers";
 import OpenAI from "openai";
 import { z } from "zod";
-import { type Json, type Database } from "~/types/supabase";
-import { createClient } from "~/utils/supabase/server";
+import { type Json, type Database } from "~/lib/types/supabase";
+import { createClient } from "~/lib/supabase/server";
 
 const terminalStates = ["completed", "cancelled", "failed", "expired"];
-
-const cookieStore = cookies();
-const supabase = createClient<Database>(cookieStore);
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // This is the default and can be omitted
 });
 
-export async function postQuestion(preveState: unknown, formData: FormData) {
-  "use server";
+const questionPostInputSchema = z.object({
+  question: z.string().min(1),
+  openAiThreadId: z
+    .string()
+    .regex(
+      /^thread_[a-zA-Z0-9]{24}$/,
+      "Must be a valid thread id `thread_AAAAAAAAAAAAAAAAAAAAAAAAA`",
+    )
+    .nullish(),
+});
 
-  const schema = z.object({
-    question: z.string().min(1),
-  });
-  const validatedFields = schema.safeParse({
-    question: formData.get("question"),
-  });
+function validatePostInput(data: unknown) {
+  const validatedFields = questionPostInputSchema.safeParse(data);
 
   if (!validatedFields.success) {
-    return {
+    return Response.json({
       errors: validatedFields.error.flatten().fieldErrors,
-    };
+    });
+  }
+  return validatedFields.data;
+}
+
+export async function POST(request: Request) {
+  const cookieStore = cookies();
+  const supabase = createClient<Database>(cookieStore);
+
+  const data = validatePostInput(await request.json());
+
+  if (data instanceof Response) {
+    return data;
   }
 
-  const { data } = validatedFields;
+  if (data.openAiThreadId) {
+    var threadId = data.openAiThreadId;
+  } else {
+    threadId = (await openai.beta.threads.create()).id;
+  }
 
-  // created the thread
-  const thread = await openai.beta.threads.create();
-
-  // created the message (question)
-  const message = await openai.beta.threads.messages.create(thread.id, {
+  const message = await openai.beta.threads.messages.create(threadId, {
     role: "user",
     content: data.question,
   });
 
-  // create the run
-  let run = await openai.beta.threads.runs.create(thread.id, {
+  let run = await openai.beta.threads.runs.create(threadId, {
     assistant_id: process.env.OPENAI_ASSISTANT_ID ?? "",
   });
 
-  // wait for the run status to be terminal
   while (!terminalStates.includes(run.status)) {
     console.log("RUN STATUS", run.status);
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    run = await openai.beta.threads.runs.retrieve(thread.id, run.id);
+    run = await openai.beta.threads.runs.retrieve(threadId, run.id);
   }
 
   /* TODO @matthewalbrecht: handle if the status isn't completed */
-
-  const messagesResponse = await openai.beta.threads.messages.list(thread.id);
+  const messagesResponse = await openai.beta.threads.messages.list(threadId);
   const assistantResponses = messagesResponse.data.filter(
     (msg) => msg.role === "assistant",
   );
@@ -72,7 +82,7 @@ export async function postQuestion(preveState: unknown, formData: FormData) {
         .join("\n"),
     )
     .join("\n");
-  console.log("NORMALIZED rESPONSE", response);
+  console.log("NORMALIZED RESPONSE", response);
 
   try {
     const finalQuestion = await supabase
@@ -81,15 +91,15 @@ export async function postQuestion(preveState: unknown, formData: FormData) {
         question: data.question,
         answer: response,
         openAiRunId: run.id,
-        openAiThreadId: thread.id,
+        openAiThreadId: threadId,
         openAiMessageResponseRaw: messagesResponse as unknown as Json,
         openAiMessageId: message.id,
       })
-      .select();
+      .select("question, answer, openAiRunId, openAiThreadId, openAiMessageId");
     console.log("FINAL QUESTION", finalQuestion);
-    return { message: "Your answer: " + response };
+    return Response.json(finalQuestion?.data?.[0]);
   } catch (error) {
     console.log("ERROR", error);
-    return { message: "Failed to update question" };
+    return Response.json({ message: "Failed to update question" });
   }
 }

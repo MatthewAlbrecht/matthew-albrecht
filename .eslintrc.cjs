@@ -16,6 +16,9 @@ const config = {
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
 
+    // these are used appropriately in trycatch and some conditional logic
+    "no-var": "off",
+
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       {
