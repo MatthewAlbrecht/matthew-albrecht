@@ -28,13 +28,16 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
       >
         {message.role === "user" ? <IconUser /> : <IconOpenAI />}
       </div>
-      <div className="prose lg:prose-xl ml-4 flex-1 space-y-2 overflow-hidden px-1">
+      <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
         <MemoizedReactMarkdown
           className="prose dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 break-words"
           remarkPlugins={[remarkGfm, remarkMath]}
           components={{
             ul({ children }) {
               return <ul className="custom-ul">{children}</ul>;
+            },
+            ol({ children }) {
+              return <ol className="custom-ol">{children}</ol>;
             },
             code({ inline, className, children, ...props }) {
               if (children.length) {

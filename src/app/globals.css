@@ -84,4 +84,10 @@
   .custom-ul .custom-ul li {
     @apply list-inside list-disc;
   }
+  /* .custom-ol .custom-ul {
+    padding-left: 1.625rem !important;
+  } */
+  .custom-ol .custom-ul li {
+    @apply list-inside list-disc;
+  }
 }
