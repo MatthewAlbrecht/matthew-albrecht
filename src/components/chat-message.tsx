@@ -17,10 +17,10 @@ export interface ChatMessageProps {
 
 export function ChatMessage({ message, ...props }: ChatMessageProps) {
   return (
-    <div className={cn("group relative mb-4 flex items-start")} {...props}>
+    <div className={cn("group relative mb-4 items-start sm:flex")} {...props}>
       <div
         className={cn(
-          "flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border shadow",
+          "hidden h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border shadow sm:flex",
           message.role === "user"
             ? "bg-background"
             : "bg-primary text-primary-foreground",
@@ -28,7 +28,10 @@ export function ChatMessage({ message, ...props }: ChatMessageProps) {
       >
         {message.role === "user" ? <IconUser /> : <IconOpenAI />}
       </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
+      <span className="text-xs leading-normal text-muted-foreground sm:hidden">
+        {message.role === "user" ? "You" : "MattAi"}
+      </span>
+      <div className="flex-1 space-y-2 overflow-hidden px-0 pt-2 sm:ml-4 sm:px-1 sm:pt-0">
         <MemoizedReactMarkdown
           className="prose dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 break-words"
           remarkPlugins={[remarkGfm, remarkMath]}

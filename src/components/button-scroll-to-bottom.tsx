@@ -19,7 +19,7 @@ export function ButtonScrollToBottom({
       variant="outline"
       size="icon"
       className={cn(
-        "absolute bottom-1 right-4 z-10 bg-background transition-opacity duration-300 sm:right-[3.1rem] md:bottom-[10rem]",
+        "absolute bottom-[6.7rem] right-4 z-10 bg-background transition-opacity duration-300 sm:right-[3.1rem] md:bottom-[10rem]",
         isAtBottom ? "opacity-0" : "opacity-100",
         className,
       )}
