@@ -1,11 +1,11 @@
-import { Inter as FontSans } from "next/font/google";
+import { Inter } from "next/font/google";
 
 import "./globals.css";
 import Link from "next/link";
 import { Toaster } from "~/components/ui/sonner";
 import { Providers } from "~/components/providers";
 
-export const fontSans = FontSans({
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={fontSans.className}>
+    <html lang="en" className={inter.className}>
       <body className="bg-background text-foreground ">
         <Providers>
           <nav className="flex h-16 w-full justify-center border-b border-b-foreground/10">
