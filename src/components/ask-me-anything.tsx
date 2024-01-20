@@ -1,39 +1,20 @@
 "use client";
 
-import {
-  type Message,
-  // import as useAssistant:
-  experimental_useAssistant as useAssistant,
-} from "ai/react";
+import { experimental_useAssistant as useAssistant } from "ai/react";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { SubmitButton } from "./submit-button";
 import { LoadingCopy } from "./loading-copy";
-import { useLocalStorage } from "~/lib/hooks/use-local-storage";
-import { Sheet, SheetContent, SheetFooter } from "./ui/sheet";
+import { Sheet, SheetContent } from "./ui/sheet";
 import { Chat } from "./chat";
-import { ChatPanel } from "./chat-panel";
 
 export default function AskMeAnything() {
-  const [localThreadId, setLocalThreadId] = useLocalStorage<string | undefined>(
-    "localThreadId",
-    undefined,
-  );
   const [aiSheetOpen, setAiSheetOpen] = React.useState(false);
-  const { status, messages, input, submitMessage, setInput, threadId } =
-    useAssistant({
-      api: "/api/assistant",
-      threadId: localThreadId,
-    });
-
-  console.log("threadId", threadId, "LOCAL:", localThreadId);
-  useEffect(() => {
-    if (threadId) {
-      setLocalThreadId(threadId);
-    }
-  }, [threadId]);
+  const { status, messages, input, submitMessage, setInput } = useAssistant({
+    api: "/api/assistant",
+  });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

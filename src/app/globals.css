@@ -70,4 +70,18 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .custom-ul {
+    padding-left: 0 !important;
+  }
+
+  .custom-ul li {
+    @apply list-none;
+  }
+  .custom-ul .custom-ul {
+    padding-left: 1.625rem !important;
+  }
+  .custom-ul .custom-ul li {
+    @apply list-inside list-disc;
+  }
 }
