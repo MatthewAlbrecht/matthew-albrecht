@@ -22,6 +22,8 @@ const questionPostInputSchema = z.object({
     .nullish(),
 });
 
+const OPEN_AI_SOURCED_REGEX = /【.*?】/g;
+
 export async function POST(req: Request) {
   // Parse the request body
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -79,68 +81,6 @@ export async function POST(req: Request) {
         if (run.status === "requires_action") {
           throw new Error("There shouldn't be any required actions");
         }
-        // if (run.status === "requires_action") {
-        //   if (run.required_action?.type === "submit_tool_outputs") {
-        //     const tool_outputs =
-        //       run.required_action.submit_tool_outputs.tool_calls.map(
-        //         (toolCall) => {
-        //           const parameters = JSON.parse(toolCall.function.arguments);
-
-        //           switch (toolCall.function.name) {
-        //             case "getRoomTemperature": {
-        //               const temperature =
-        //                 homeTemperatures[
-        //                   parameters.room as keyof typeof homeTemperatures
-        //                 ];
-
-        //               return {
-        //                 tool_call_id: toolCall.id,
-        //                 output: temperature.toString(),
-        //               };
-        //             }
-
-        //             case "setRoomTemperature": {
-        //               const oldTemperature =
-        //                 homeTemperatures[
-        //                   parameters.room as keyof typeof homeTemperatures
-        //                 ];
-
-        //               homeTemperatures[
-        //                 parameters.room as keyof typeof homeTemperatures
-        //               ] = parameters.temperature;
-
-        //               sendDataMessage({
-        //                 role: "data",
-        //                 data: {
-        //                   oldTemperature,
-        //                   newTemperature: parameters.temperature,
-        //                   description: `Temperature in ${parameters.room} changed from ${oldTemperature} to ${parameters.temperature}`,
-        //                 },
-        //               });
-
-        //               return {
-        //                 tool_call_id: toolCall.id,
-        //                 output: `temperature set successfully`,
-        //               };
-        //             }
-
-        //             default:
-        //               throw new Error(
-        //                 `Unknown tool call function: ${toolCall.function.name}`,
-        //               );
-        //           }
-        //         },
-        //       );
-
-        //     run = await openai.beta.threads.runs.submitToolOutputs(
-        //       threadId!,
-        //       run.id,
-        //       { tool_outputs },
-        //     );
-
-        //     await waitForRun(run);
-        //   }
-        // }
       }
 
       await waitForRun(run);
@@ -158,9 +98,17 @@ export async function POST(req: Request) {
         sendMessage({
           id: message.id,
           role: "assistant",
-          content: message.content.filter(
-            (content) => content.type === "text",
-          ) as Array<MessageContentText>,
+          content: (
+            message.content.filter(
+              (content) => content.type === "text",
+            ) as Array<MessageContentText>
+          ).map((content) => ({
+            ...content,
+            text: {
+              ...content.text,
+              value: content.text.value.replace(OPEN_AI_SOURCED_REGEX, ""),
+            },
+          })),
         });
       }
     },
