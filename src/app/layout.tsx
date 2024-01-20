@@ -2,7 +2,8 @@ import { Inter as FontSans } from "next/font/google";
 
 import "./globals.css";
 import Link from "next/link";
-import { QueryProvider } from "~/components/query-provider";
+import { Toaster } from "~/components/ui/sonner";
+import { Providers } from "~/components/providers";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={fontSans.className}>
       <body className="bg-background text-foreground ">
-        <QueryProvider>
+        <Providers>
           <nav className="flex h-16 w-full justify-center border-b border-b-foreground/10">
             <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
               <Link href={"/haiku"}>Haikus</Link>
@@ -41,7 +42,8 @@ export default function RootLayout({
           <main className="flex min-h-screen flex-col items-center">
             {children}
           </main>
-        </QueryProvider>
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

@@ -1,79 +1,84 @@
 "use client";
 
-import React from "react";
-import { useMutation } from "@tanstack/react-query";
-import useSimpleFormState from "~/lib/hooks/use-simple-form-state";
-import { type Database } from "~/lib/types/supabase";
-import { useLocalStorage } from "usehooks-ts";
+import {
+  type Message,
+  // import as useAssistant:
+  experimental_useAssistant as useAssistant,
+} from "ai/react";
 
-function postQuestion(variables: InputVariables) {
-  return fetch("/api/questions", {
-    method: "POST",
-    body: JSON.stringify(variables),
-  }).then((res) => res.json());
-}
-
-type FormState = {
-  question: string;
-};
-type InputVariables = Database["public"]["Tables"]["questions"]["Insert"];
-type ResponseType = Database["public"]["Tables"]["questions"]["Row"];
+import React, { useEffect } from "react";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { SubmitButton } from "./submit-button";
+import { LoadingCopy } from "./loading-copy";
+import { useLocalStorage } from "~/lib/hooks/use-local-storage";
+import { Sheet, SheetContent, SheetFooter } from "./ui/sheet";
+import { Chat } from "./chat";
+import { ChatPanel } from "./chat-panel";
 
 export default function AskMeAnything() {
-  const [openAiThreadId, setOpenAiThreadId] = useLocalStorage(
-    "openAiThreadId",
-    "",
+  const [localThreadId, setLocalThreadId] = useLocalStorage<string | undefined>(
+    "localThreadId",
+    undefined,
   );
-  const postQuestionMutation = useMutation<ResponseType, Error, InputVariables>(
-    {
-      mutationFn: postQuestion,
-    },
-  );
-  const [formState, setFormField] = useSimpleFormState<FormState>({
-    question: "",
-  });
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const [aiSheetOpen, setAiSheetOpen] = React.useState(false);
+  const { status, messages, input, submitMessage, setInput, threadId } =
+    useAssistant({
+      api: "/api/assistant",
+      threadId: localThreadId,
+    });
 
-    console.log("THREAD ID", openAiThreadId);
-    /* TODO @matthewalbrecht: Add validation */
-    postQuestionMutation.mutate(
-      { ...formState, openAiThreadId: openAiThreadId },
-      {
-        onSuccess(data, variables, context) {
-          console.log("onSuccess", { data, variables, context });
-          if (!openAiThreadId && data.openAiThreadId) {
-            console.log("setOpenAiThreadId", data.openAiThreadId);
-            setOpenAiThreadId(data.openAiThreadId);
-          }
-        },
-      },
-    );
-  }
+  console.log("threadId", threadId, "LOCAL:", localThreadId);
+  useEffect(() => {
+    if (threadId) {
+      setLocalThreadId(threadId);
+    }
+  }, [threadId]);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!input?.trim()) {
+      return;
+    }
+    setInput("");
+    setAiSheetOpen(true);
+    void submitMessage(event);
+  };
+
+  const isLoading = status === "in_progress";
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <h1>Ask me anything</h1>
-        <p>I'm a software engineer </p>
-        <label htmlFor="question">Ask me anything</label>
-        <input
-          id="question"
+        <p>I'm a software engineer</p>
+        <Label htmlFor="message">Email</Label>
+        <Input
+          id="message"
           type="text"
-          name="question"
-          value={formState.question}
-          onChange={(event) => setFormField("question", event.target.value)}
+          name="message"
+          value={input}
+          onChange={(event) => setInput(event.currentTarget.value)}
           required
         />
-        <button type="submit" disabled={postQuestionMutation.isPending}>
-          Submit
-        </button>
+        <LoadingCopy />
+        <SubmitButton />
       </form>
-      {postQuestionMutation.data?.answer && (
-        <div>
-          <h2>Answer</h2>
-          <p>{postQuestionMutation.data.answer}</p>
-        </div>
-      )}
+
+      <Sheet
+        open={aiSheetOpen}
+        onOpenChange={() => setAiSheetOpen((prev) => !prev)}
+      >
+        <SheetContent className="w-full sm:max-w-2xl">
+          <Chat
+            setInput={setInput}
+            messages={messages}
+            isLoading={isLoading}
+            input={input}
+            submitMessage={submitMessage}
+          />
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
