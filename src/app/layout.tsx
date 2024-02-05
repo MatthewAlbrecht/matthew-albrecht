@@ -1,11 +1,11 @@
-import { Inter } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 
 import "./globals.css";
-import Link from "next/link";
 import { Toaster } from "~/components/ui/sonner";
 import { Providers } from "~/components/providers";
+import Header from "~/components/Header";
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -26,22 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
-      <body className="bg-background text-foreground ">
+    <html lang="en" className={dmSans.className}>
+      <body className="relative min-h-screen bg-background text-foreground">
         <Providers>
-          <nav className="flex h-16 w-full justify-center border-b border-b-foreground/10">
-            <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
-              <Link href={"/haiku"}>Haikus</Link>
-              <Link href={"/work"}>Work</Link>
-              <Link href={"/resume"}>Resume</Link>
-              <Link href={"/blog"}>Blog</Link>
-              <Link href={"/now"}>Now</Link>
-              <Link href={"/weeks"}>Weeks</Link>
-            </div>
-          </nav>
-          <main className="flex min-h-screen flex-col items-center">
-            {children}
-          </main>
+          <Header />
+          <div className="bg-background-gray absolute left-0 top-0 -z-10 h-screen w-[46.1%]" />
+          <div className="bg-background-tan absolute right-0 top-0 -z-10 h-screen w-[53.9%]" />
+          <main>{children}</main>
           <Toaster />
         </Providers>
       </body>

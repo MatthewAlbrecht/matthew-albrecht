@@ -1,44 +1,56 @@
-import NextLogo from "./NextLogo";
-import SupabaseLogo from "./SupabaseLogo";
+import Link from "next/link";
+import { Separator } from "./ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from "./ui/dialog";
 
 export default function Header() {
   return (
-    <div className="flex flex-col gap-16 items-center">
-      <div className="flex gap-8 justify-center items-center">
-        <a
-          href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <SupabaseLogo />
-        </a>
-        <span className="border-l rotate-45 h-6" />
-        <a href="https://nextjs.org/" target="_blank" rel="noreferrer">
-          <NextLogo />
-        </a>
-      </div>
-      <h1 className="sr-only">Supabase and Next.js Starter Template</h1>
-      <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
-        The fastest way to build apps with{" "}
-        <a
-          href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-          target="_blank"
-          className="font-bold hover:underline"
-          rel="noreferrer"
-        >
-          Supabase
-        </a>{" "}
-        and{" "}
-        <a
-          href="https://nextjs.org/"
-          target="_blank"
-          className="font-bold hover:underline"
-          rel="noreferrer"
-        >
-          Next.js
-        </a>
-      </p>
-      <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
+    <div className="">
+      <header className="px-6 py-8">
+        <Separator className="bg-foreground/20" />
+        <div className="flex w-full items-center justify-between py-2 text-xs font-medium uppercase">
+          <Link href={"/"}>Matt Albrecht</Link>
+          <nav className="flex w-[61%] items-center justify-between">
+            <span>/Home</span>
+            <Menu />
+          </nav>
+        </div>
+      </header>
     </div>
+  );
+}
+
+function Menu() {
+  return (
+    <Dialog>
+      <DialogTrigger>
+        <span className="text-xs font-bold uppercase">• • menu</span>
+      </DialogTrigger>
+      <DialogContent className="h-full max-w-full animate-none rounded-none border-none bg-primary p-0 text-primary-foreground">
+        <DialogHeader>
+          <header className="px-6 py-8">
+            <Separator className="z-[60] bg-primary-foreground/20" />
+            <div className="flex w-full items-center justify-between py-2 text-xs font-medium uppercase">
+              <Link className="z-[60]" href={"/"}>
+                Matt Albrecht
+              </Link>
+              <nav className="flex w-[61%] items-center justify-between">
+                <span className="z-[60]">/Home</span>
+              </nav>
+            </div>
+          </header>
+
+          <DialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }

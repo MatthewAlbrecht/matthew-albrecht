@@ -4,7 +4,7 @@ import OpenAI from "openai";
 import { type MessageContentText } from "openai/resources/beta/threads/messages/messages";
 import { z } from "zod";
 import { createClient } from "~/lib/supabase/server";
-import { Database } from "~/lib/types/supabase";
+import { type Database } from "~/lib/types/supabase";
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
