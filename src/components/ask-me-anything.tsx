@@ -6,6 +6,7 @@ import React from "react";
 import { Input } from "./ui/input";
 import { Sheet, SheetContent } from "./ui/sheet";
 import { Chat } from "./chat";
+import { Button } from "./ui/button";
 
 export default function AskMeAnything() {
   const [aiSheetOpen, setAiSheetOpen] = React.useState(false);
@@ -16,11 +17,17 @@ export default function AskMeAnything() {
   const isLoading = status === "in_progress";
 
   return (
-    <div>
-      <h1>Ask me anything</h1>
-      <p>I'm a software engineer</p>
-      <Input onFocus={() => setAiSheetOpen(true)} />
-
+    <>
+      <Input
+        className="mr-2 h-14 flex-1 rounded-none border-l-0 border-r-0 border-t-0 border-foreground/30 pl-0 text-lg placeholder:text-foreground/30 focus:outline-none"
+        withFocus={false}
+        placeholder="Ask me anything..."
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+      <Button size="xl" onClick={() => setAiSheetOpen(true)}>
+        Ask Matt AI
+      </Button>
       <Sheet
         open={aiSheetOpen}
         onOpenChange={() => setAiSheetOpen((prev) => !prev)}
@@ -35,6 +42,6 @@ export default function AskMeAnything() {
           />
         </SheetContent>
       </Sheet>
-    </div>
+    </>
   );
 }

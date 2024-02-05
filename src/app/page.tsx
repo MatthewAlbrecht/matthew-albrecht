@@ -4,9 +4,7 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
 import AskMeAnything from "~/components/ask-me-anything";
-import { Button } from "~/components/ui/button";
-import { IconChevron, IconSplashLines } from "~/components/ui/icons";
-import { Input } from "~/components/ui/input";
+import { IconChevron } from "~/components/ui/icons";
 import { cn } from "~/lib/utils";
 
 export default function Index() {
@@ -45,12 +43,7 @@ export default function Index() {
       >
         <div className="mt-[3.25rem] flex w-[57.4%] flex-grow flex-col justify-between bg-background px-6 py-6">
           <div className="flex items-center justify-between">
-            <Input
-              className="mr-2 h-14 flex-1 rounded-none border-l-0 border-r-0 border-t-0 border-foreground/30 pl-0 text-lg placeholder:text-foreground/30 focus:outline-none"
-              withFocus={false}
-              placeholder="Ask me anything..."
-            />
-            <Button size="xl">Ask Matt AI</Button>
+            <AskMeAnything />
           </div>
           <motion.div style={{ translateY }}>
             <h1 className="relative -mr-96 mb-12 text-8xl font-bold uppercase leading-[0.88] tracking-tighter text-splash-foreground">
