@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
+import { type RecursiveKeyValuePair } from "tailwindcss/types/config";
 
 function withOpacity(
   variableName: string,
@@ -32,39 +33,80 @@ const config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        "background-gray": "hsl(var(--background-gray))",
-        "background-tan": "hsl(var(--background-tan))",
-        foreground: withOpacity("--foreground"),
+        background: {
+          DEFAULT: "hsl(var(--background))",
+          gray: "hsl(var(--background-gray))",
+          tan: "hsl(var(--background-tan))",
+        },
+        foreground: withOpacity(
+          "--foreground",
+        ) as unknown as RecursiveKeyValuePair<string, string>,
         primary: {
-          DEFAULT: withOpacity("--primary"),
-          foreground: withOpacity("--primary-foreground"),
+          DEFAULT: withOpacity("--primary") as unknown as RecursiveKeyValuePair<
+            string,
+            string
+          >,
+          foreground: withOpacity(
+            "--primary-foreground",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
         },
         secondary: {
-          DEFAULT: withOpacity("--secondary"),
-          foreground: withOpacity("--secondary-foreground"),
+          DEFAULT: withOpacity(
+            "--secondary",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
+          foreground: withOpacity(
+            "--secondary-foreground",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
         },
         destructive: {
-          DEFAULT: withOpacity("--destructive"),
-          foreground: withOpacity("--destructive-foreground"),
+          DEFAULT: withOpacity(
+            "--destructive",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
+          foreground: withOpacity(
+            "--destructive-foreground",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
         },
         muted: {
-          DEFAULT: withOpacity("--muted"),
-          foreground: withOpacity("--muted-foreground"),
+          DEFAULT: withOpacity("--muted") as unknown as RecursiveKeyValuePair<
+            string,
+            string
+          >,
+          foreground: withOpacity(
+            "--muted-foreground",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
         },
         accent: {
-          DEFAULT: withOpacity("--accent"),
-          foreground: withOpacity("--accent-foreground"),
+          DEFAULT: withOpacity("--accent") as unknown as RecursiveKeyValuePair<
+            string,
+            string
+          >,
+          foreground: withOpacity(
+            "--accent-foreground",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
         },
         popover: {
-          DEFAULT: withOpacity("--popover"),
-          foreground: withOpacity("--popover-foreground"),
+          DEFAULT: withOpacity("--popover") as unknown as RecursiveKeyValuePair<
+            string,
+            string
+          >,
+          foreground: withOpacity(
+            "--popover-foreground",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
         },
         card: {
-          DEFAULT: withOpacity("--card"),
-          foreground: withOpacity("--card-foreground"),
+          DEFAULT: withOpacity("--card") as unknown as RecursiveKeyValuePair<
+            string,
+            string
+          >,
+          foreground: withOpacity(
+            "--card-foreground",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
         },
-        "splash-foreground": withOpacity("--splash-foreground"),
+        splash: {
+          foreground: withOpacity(
+            "--splash-foreground",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
