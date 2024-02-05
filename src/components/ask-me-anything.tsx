@@ -16,18 +16,25 @@ export default function AskMeAnything() {
 
   const isLoading = status === "in_progress";
 
+  function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setAiSheetOpen(true);
+  }
+
   return (
     <>
-      <Input
-        className="mr-2 h-14 flex-1 rounded-none border-l-0 border-r-0 border-t-0 border-foreground/30 pl-0 text-lg placeholder:text-foreground/30 focus:outline-none"
-        withFocus={false}
-        placeholder="Ask me anything..."
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <Button size="xl" onClick={() => setAiSheetOpen(true)}>
-        Ask Matt AI
-      </Button>
+      <form onSubmit={handleFormSubmit} className="flex w-full">
+        <Input
+          className="mr-2 h-14 flex-1 rounded-none border-l-0 border-r-0 border-t-0 border-foreground/30 pl-0 text-lg placeholder:text-foreground/30 focus:outline-none"
+          withFocus={false}
+          placeholder="Ask me anything..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <Button size="xl" type="submit">
+          Ask Matt AI
+        </Button>
+      </form>
       <Sheet
         open={aiSheetOpen}
         onOpenChange={() => setAiSheetOpen((prev) => !prev)}

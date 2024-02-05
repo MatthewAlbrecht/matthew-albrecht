@@ -41,7 +41,7 @@ export default function Index() {
         className="relative flex min-h-fill flex-col overflow-hidden"
         ref={ref}
       >
-        <div className="mt-[3.25rem] flex w-[57.4%] flex-grow flex-col justify-between bg-background px-6 py-6">
+        <div className="relative mt-[3.25rem] flex w-[57.4%] flex-grow flex-col justify-between bg-background px-6 py-6">
           <div className="flex items-center justify-between">
             <AskMeAnything />
           </div>
