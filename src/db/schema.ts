@@ -7,6 +7,7 @@ import {
   mediumtext,
   datetime,
   json,
+  tinytext,
 } from "drizzle-orm/mysql-core";
 
 /**
@@ -66,6 +67,22 @@ export const aiQuestions = mysqlTable(
     openAiRunId: varchar("openai_run_id", { length: 255 }),
     openAiMessageId: varchar("openai_message_id", { length: 255 }),
     openAiResponseRaw: json("openai_response_raw"),
+  },
+  () => ({}),
+);
+
+export const stuffILike = mysqlTable(
+  "stuff_i_like",
+  {
+    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    createdAt: timestamp("created_at")
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    title: tinytext("question").notNull(),
+    subtitle: tinytext("subtitle").notNull(),
+    category: tinytext("category").notNull(),
+    contentUrl: varchar("content_url", { length: 255 }).notNull(),
+    imageUrl: varchar("image_url", { length: 255 }),
   },
   () => ({}),
 );
