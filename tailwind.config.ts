@@ -37,6 +37,7 @@ const config = {
           DEFAULT: "hsl(var(--background))",
           gray: "hsl(var(--background-gray))",
           tan: "hsl(var(--background-tan))",
+          work: "hsl(var(--background-work))",
         },
         foreground: withOpacity(
           "--foreground",
@@ -56,6 +57,17 @@ const config = {
           ) as unknown as RecursiveKeyValuePair<string, string>,
           foreground: withOpacity(
             "--secondary-foreground",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
+        },
+        hamburger: {
+          DEFAULT: withOpacity(
+            "--hamburger",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
+          foreground: withOpacity(
+            "--hamburger-foreground",
+          ) as unknown as RecursiveKeyValuePair<string, string>,
+          alt: withOpacity(
+            "--hamburger-alt",
           ) as unknown as RecursiveKeyValuePair<string, string>,
         },
         destructive: {
@@ -108,6 +120,9 @@ const config = {
           ) as unknown as RecursiveKeyValuePair<string, string>,
         },
       },
+      aspectRatio: {
+        "4/3": "4 / 3",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -130,6 +145,9 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      gridTemplateColumns: {
+        main: "39% 61%",
       },
     },
   },

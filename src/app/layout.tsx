@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "~/components/ui/sonner";
 import { Providers } from "~/components/providers";
 import Header from "~/components/Header";
+import Footer from "~/components/footer";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -30,10 +31,9 @@ export default function RootLayout({
       <body className="relative min-h-screen bg-background text-foreground">
         <Providers>
           <Header />
-          <div className="absolute left-0 top-0 -z-10 h-screen w-[calc(57.4%-168px)] bg-background-gray" />
-          <div className="absolute left-[calc(57.4%-168px)] right-0 top-0 -z-10 h-screen bg-background-tan" />
           <main>{children}</main>
           <Toaster />
+          <Footer />
         </Providers>
       </body>
     </html>

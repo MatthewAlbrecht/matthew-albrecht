@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Separator } from "./ui/separator";
 import {
@@ -9,8 +11,11 @@ import {
 } from "./ui/dialog";
 import { IconArrowDiagonal } from "./ui/icons";
 import { LineOne, LineTwo } from "./ui/lines";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
+
   return (
     <div>
       <header className="px-6 py-8">
@@ -18,8 +23,18 @@ export default function Header() {
         <div className="flex w-full items-center justify-between py-2 text-xs font-medium uppercase">
           <Link href={"/"}>Matt Albrecht</Link>
           <nav className="flex w-[61%] items-center justify-between">
-            <span>/Home</span>
-            <Menu />
+            <span>
+              {pathname
+                .slice(1)
+                .split("/")
+                .map((path, index) => (
+                  <span key={index}>
+                    <span className="mx-0.5">/</span>
+                    {`${path ? path : "home"}`}
+                  </span>
+                ))}
+            </span>
+            <Menu pathname={pathname} />
           </nav>
         </div>
       </header>
@@ -27,26 +42,39 @@ export default function Header() {
   );
 }
 
-function Menu() {
+function Menu({ pathname }: { pathname: string }) {
   return (
     <Dialog>
       <DialogTrigger>
         <span className="text-xs font-bold uppercase">• • menu</span>
       </DialogTrigger>
-      <FullDialogContent className="flex flex-col" withClose={false}>
-        <div className="absolute right-[21.8%] top-0 flex gap-1 text-primary-foreground/20">
+      <FullDialogContent
+        className="bg-hamburger text-hamburger-foreground flex flex-col"
+        withClose={false}
+      >
+        <div className="text-hamburger-foreground/20 absolute right-[21.8%] top-0 flex gap-1">
           <LineOne />
           <LineTwo />
         </div>
         <DialogHeader>
           <header className="px-6 py-8">
-            <Separator className="z-[60] bg-primary-foreground/20" />
+            <Separator className="bg-hamburger-foreground/20 z-[60]" />
             <div className="flex w-full items-center justify-between py-2 text-xs font-medium uppercase">
               <Link className="z-[60]" href={"/"}>
                 Matt Albrecht
               </Link>
               <nav className="flex w-[61%] items-center justify-between">
-                <span className="z-[60]">/Home</span>
+                <span>
+                  {pathname
+                    .slice(1)
+                    .split("/")
+                    .map((path, index) => (
+                      <span key={index}>
+                        <span className="mx-0.5">/</span>
+                        {`${path ? path : "home"}`}
+                      </span>
+                    ))}
+                </span>
                 <DialogClose asChild>
                   <button className="text-xs font-medium uppercase">
                     x close
@@ -57,10 +85,10 @@ function Menu() {
             </div>
           </header>
         </DialogHeader>
-        <div className="flex flex-grow flex-col justify-between px-6 pb-6 pt-8 text-primary-foreground">
+        <div className="text-hamburger-foreground flex flex-grow flex-col justify-between px-6 pb-6 pt-8">
           <ul className="group flex flex-col justify-between space-y-6 text-7xl font-medium tracking-tighter">
             <li className="hover:opacity-[100!important] group-hover:opacity-50">
-              <Link className="block w-full" href={"/"}>
+              <Link className="block w-full" href={"/work/coachella"}>
                 Work
               </Link>
             </li>

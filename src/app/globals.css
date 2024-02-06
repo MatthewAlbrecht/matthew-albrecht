@@ -15,11 +15,21 @@
     --card: 0 0% 100%;
     --card-foreground: 20 14.3% 4.1%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 20 14.3% 4.1%;
-
     --primary: 252, 6%, 32%;
     --primary-foreground: 24, 17%, 89%;
+
+    --hamburger: 252, 6%, 32%;
+    --hamburger-alt: 252, 5%, 42%;
+    --hamburger-foreground: 24, 17%, 89%;
+
+    --header-height: 6.0625rem;
+    --fill-height: calc(100vh - var(--header-height));
+    --fill-height-splash: calc(100vh - var(--header-height) - 13rem);
+
+    /* ------------------------------------------------------------------------------------ */
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
 
     --secondary: 60 4.8% 95.9%;
     --secondary-foreground: 24 9.8% 10%;
@@ -38,10 +48,6 @@
     --ring: 20 14.3% 4.1%;
 
     --radius: 0.5rem;
-
-    --header-height: 6.0625rem;
-    --fill-height: calc(100vh - var(--header-height));
-    --fill-height-splash: calc(100vh - var(--header-height) - 13rem);
   }
 
   .dark {

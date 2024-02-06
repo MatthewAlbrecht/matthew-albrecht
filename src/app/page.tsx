@@ -37,6 +37,8 @@ export default function Index() {
 
   return (
     <>
+      <div className="absolute left-0 top-0 -z-10 h-screen w-[calc(57.4%-168px)] bg-background-gray" />
+      <div className="absolute left-[calc(57.4%-168px)] right-0 top-0 -z-10 h-screen bg-background-tan" />
       <div
         className="relative flex min-h-fill flex-col overflow-hidden"
         ref={ref}
@@ -48,10 +50,10 @@ export default function Index() {
           <motion.div style={{ translateY }}>
             <h1 className="relative -mr-96 mb-12 text-8xl font-bold uppercase leading-[0.88] tracking-tighter text-splash-foreground">
               Thru-Hiker. <br />
-              Avid Breather. <br />
+              Developer. <br />
               Bonnaroovian. <br />
               <span className="absolute text-splash-foreground/20">
-                Developer. <br />
+                Avid Breather. <br />
                 Ideas Guy. <br />
                 Free Thinker. <br />
               </span>

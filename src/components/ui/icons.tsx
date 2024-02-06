@@ -173,13 +173,17 @@ function IconArrowDown({ className, ...props }: React.ComponentProps<"svg">) {
 function IconArrowRight({ className, ...props }: React.ComponentProps<"svg">) {
   return (
     <svg
+      viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 256 256"
       fill="currentColor"
       className={cn("h-4 w-4", className)}
       {...props}
     >
-      <path d="m221.66 133.66-72 72a8 8 0 0 1-11.32-11.32L196.69 136H40a8 8 0 0 1 0-16h156.69l-58.35-58.34a8 8 0 0 1 11.32-11.32l72 72a8 8 0 0 1 0 11.32Z" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M9.80584 16.2879C10.172 16.654 10.7655 16.654 11.1317 16.2879L16.7567 10.6629C17.1228 10.2968 17.1228 9.7032 16.7567 9.33709L11.1317 3.71209C10.7655 3.34597 10.172 3.34597 9.80584 3.71209C9.43972 4.0782 9.43972 4.6718 9.80584 5.03791L13.8304 9.0625H3.90625C3.38848 9.0625 2.96875 9.48223 2.96875 10C2.96875 10.5178 3.38848 10.9375 3.90625 10.9375H13.8304L9.80584 14.9621C9.43972 15.3282 9.43972 15.9218 9.80584 16.2879Z"
+      />
     </svg>
   );
 }
