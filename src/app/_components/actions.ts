@@ -2,8 +2,6 @@
 import { cookies } from "next/headers";
 import OpenAI from "openai";
 import { z } from "zod";
-import { type Database } from "~/lib/types/supabase";
-import { createClient } from "~/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 const cookieStore = cookies();

@@ -1,10 +1,9 @@
 import { experimental_AssistantResponse } from "ai";
-import { cookies } from "next/headers";
 import OpenAI from "openai";
 import { type MessageContentText } from "openai/resources/beta/threads/messages/messages";
 import { z } from "zod";
-import { createClient } from "~/lib/supabase/server";
-import { type Database } from "~/lib/types/supabase";
+import { db } from "~/db";
+import { aiQuestions } from "~/db/schema";
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
@@ -48,10 +47,6 @@ export async function POST(req: Request) {
     role: "user",
     content: data.message,
   });
-
-  // SEND THE MESSAGE TO SUPABASE, ALONG WITH TRHEAD ID AND MESSAGE ID
-  const cookieStore = cookies();
-  const supabase = createClient<Database>(cookieStore);
 
   return experimental_AssistantResponse(
     { threadId, messageId: createdMessage.id },
@@ -123,14 +118,12 @@ export async function POST(req: Request) {
         });
       }
       console.log("ACTUAL RESPONSE", actualResponse);
-      await supabase.from("questions").insert([
-        {
-          question: data.message,
-          openAiThreadId: threadId,
-          openAiMessageId: createdMessage.id,
-          answer: actualResponse,
-        },
-      ]);
+      await db.insert(aiQuestions).values({
+        question: data.message,
+        openAiThreadId: threadId,
+        openAiMessageId: createdMessage.id,
+        answer: actualResponse,
+      });
     },
   );
 }
