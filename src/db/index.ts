@@ -12,8 +12,7 @@ export const connection = connect({
 
 export const db = drizzle(connection, { schema });
 
-export const { searches, searchResults, moodboards, moodboardImages, users } =
-  schema;
+export const { users, aiQuestions, stuffILike } = schema;
 
 export const lucia = new Lucia(
   new PlanetScaleAdapter(connection, {

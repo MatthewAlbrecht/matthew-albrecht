@@ -7,8 +7,6 @@ export default async function Page() {
   const dir = path.join(process.cwd(), "./src/app/blog/(blogs)");
   const blogFiles = fs.readdirSync(dir);
 
-  console.log(blogFiles);
-
   const blogSlugs = blogFiles.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
     return slug;

@@ -5,8 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "db:push": "drizzle-kit push:mysql",
-    "db:studio": "drizzle-kit studio"
+    "db:push": "dotenv drizzle-kit push:mysql",
+    "db:studio": "dotenv drizzle-kit studio"
   },
   "dependencies": {
     "@lucia-auth/adapter-mysql": "^3.0.0",
@@ -67,6 +67,7 @@
     "@types/react-dom": "18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
+    "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.20.14",
     "encoding": "^0.1.13",
     "eslint": "^8.56.0",

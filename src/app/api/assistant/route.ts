@@ -117,7 +117,6 @@ export async function POST(req: Request) {
           })),
         });
       }
-      console.log("ACTUAL RESPONSE", actualResponse);
       await db.insert(aiQuestions).values({
         question: data.message,
         openAiThreadId: threadId,
