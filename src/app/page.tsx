@@ -3,8 +3,8 @@
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
-import AskMeAnything from "~/components/ask-me-anything";
-import { IconChevron } from "~/components/ui/icons";
+import AskMeAnything from "~/app/_components/ask-me-anything";
+import { IconChevron } from "~/app/_components/ui/icons";
 import { cn } from "~/lib/utils";
 
 export default function Index() {

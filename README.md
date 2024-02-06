@@ -1,7 +1,4 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Matthew Albrechts Personal Website</h1>
-</a>
+<h1 align="center">Matthew Albrechts Personal Website</h1>
 
 <p align="center">
  The fastest way to learn about Matthew Albrecht
@@ -15,7 +12,7 @@
 ## Features
 
 - NextJS App Router (React Server Components)
-- Supabase PostgreSQL, Auth, and File Storage
+- PlanetScale, Lucia Auth, and UploadThing
 - TailwindCSS
 - shadcn
 - OpenAI Assistant API

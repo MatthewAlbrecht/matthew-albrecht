@@ -1,118 +1,106 @@
 import Link from "next/link";
-import { headers, cookies } from "next/headers";
-import { createClient } from "~/lib/supabase/server";
+import { getPageSession } from "~/server/api/trpc";
+import { z } from "zod";
+import { SubmitButton } from "../_components/submit-button";
+import { Input } from "../_components/ui/input";
+import { Label } from "../_components/ui/label";
+import { Argon2id } from "oslo/password";
+import { cookies } from "next/headers";
+import { lucia, db, users } from "~/db";
 import { redirect } from "next/navigation";
+import { eq } from "drizzle-orm";
 
-export default function Login({
-  searchParams,
-}: {
-  searchParams: { message: string };
-}) {
-  const signIn = async (formData: FormData) => {
-    "use server";
+const emailSchema = z.string().min(4).max(31);
+const passwordSchema = z.string().min(6).max(255);
 
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const cookieStore = cookies();
-    const supabase = createClient(cookieStore);
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      return redirect("/login?message=Could not authenticate user");
-    }
-
-    return redirect("/");
-  };
-
-  const signUp = async (formData: FormData) => {
-    "use server";
-
-    const origin = headers().get("origin");
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const cookieStore = cookies();
-    const supabase = createClient(cookieStore);
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      return redirect("/login?message=Could not authenticate user");
-    }
-
-    return redirect("/login?message=Check email to continue sign in process");
-  };
+const Page = async () => {
+  const { session } = await getPageSession();
+  if (session) redirect("/");
 
   return (
-    <div className="flex w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">
-      <Link
-        href="/"
-        className="group absolute left-8 top-8 flex items-center rounded-md bg-btn-background px-4 py-2 text-sm text-foreground no-underline hover:bg-btn-background-hover"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-        >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>{" "}
-        Back
-      </Link>
-
-      <form
-        className="animate-in flex w-full flex-1 flex-col justify-center gap-2 text-foreground"
-        action={signIn}
-      >
-        <label className="text-md" htmlFor="email">
-          Email
-        </label>
-        <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
-          name="email"
-          placeholder="you@example.com"
-          required
-        />
-        <label className="text-md" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          required
-        />
-        <button className="mb-2 rounded-md bg-green-700 px-4 py-2 text-foreground">
-          Sign In
-        </button>
-        <button
-          formAction={signUp}
-          className="mb-2 rounded-md border border-foreground/20 px-4 py-2 text-foreground"
-        >
-          Sign Up
-        </button>
-        {searchParams?.message && (
-          <p className="mt-4 bg-foreground/10 p-4 text-center text-foreground">
-            {searchParams.message}
-          </p>
-        )}
+    <>
+      <div className="space-y-2 text-center">
+        <h1 className="text-3xl font-bold">Login</h1>
+        <p className="text-gray-500 dark:text-gray-400">
+          Enter your email and password to login to your account
+        </p>
+      </div>
+      <form action={loginUser} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" name="email" placeholder="Email" required />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" name="password" required type="password" />
+        </div>
+        <SubmitButton className="w-full" text="Login" />
       </form>
-    </div>
+      <div className="mt-4 text-center text-sm">
+        Don&apos;t have an account?{" "}
+        <Link className="underline" href="/signup">
+          Sign up
+        </Link>
+      </div>
+    </>
   );
+};
+
+export default Page;
+
+async function loginUser(formData: FormData) {
+  "use server";
+  const emailValidation = emailSchema.safeParse(formData.get("email"));
+  const passwordValidation = passwordSchema.safeParse(formData.get("password"));
+
+  if (!emailValidation.success) {
+    return {
+      error: emailValidation.error.flatten(),
+    };
+  }
+  if (!passwordValidation.success) {
+    return {
+      error: passwordValidation.error.flatten(),
+    };
+  }
+
+  const email = emailValidation.data;
+  const password = passwordValidation.data;
+
+  const existingUser = await db.query.users.findFirst({
+    where: eq(users.email, email),
+  });
+  if (!existingUser) {
+    // NOTE:
+    // Returning immediately allows malicious actors to figure out valid usernames from response times,
+    // allowing them to only focus on guessing passwords in brute-force attacks.
+    // As a preventive measure, you may want to hash passwords even for invalid usernames.
+    // However, valid usernames can be already be revealed with the signup page among other methods.
+    // It will also be much more resource intensive.
+    // Since protecting against this is none-trivial,
+    // it is crucial your implementation is protected against brute-force attacks with login throttling etc.
+    // If usernames are public, you may outright tell the user that the username is invalid.
+    return {
+      error: "Incorrect username or password",
+    };
+  }
+
+  const validPassword = await new Argon2id().verify(
+    existingUser.hashedPassword,
+    password,
+  );
+  if (!validPassword) {
+    return {
+      error: "Incorrect username or password",
+    };
+  }
+
+  const session = await lucia.createSession(existingUser.id, {});
+  const sessionCookie = lucia.createSessionCookie(session.id);
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes,
+  );
+  return redirect("/");
 }

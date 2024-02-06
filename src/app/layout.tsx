@@ -1,10 +1,10 @@
 import { DM_Sans } from "next/font/google";
 
 import "./globals.css";
-import { Toaster } from "~/components/ui/sonner";
-import { Providers } from "~/components/providers";
-import Header from "~/components/Header";
-import Footer from "~/components/footer";
+import { Toaster } from "~/app/_components/ui/sonner";
+import { Providers } from "~/app/_components/providers";
+import Header from "~/app/_components/Header";
+import Footer from "~/app/_components/footer";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],

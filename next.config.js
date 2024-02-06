@@ -1,16 +1,19 @@
-const withMDXFn = require("@next/mdx");
-
-const withMDX = withMDXFn();
+await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   images: {
     domains: ["aceternity.com"],
   },
   experimental: {
     typedRoutes: true,
   },
+  webpack: (config) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    config.externals.push("@node-rs/argon2", "@node-rs/bcrypt");
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return config;
+  },
 };
 
-module.exports = withMDX(config);
+export default config;

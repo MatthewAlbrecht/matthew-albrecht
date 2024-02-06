@@ -26,6 +26,5 @@ const css = `
         --background: 26, 14%, 96%;
         --card: 34, 21%, 85%;
         --card-foreground: 3, 13, 22%;
-        --primary-foreground: 6, 9%, 48%;
     }
 `;
