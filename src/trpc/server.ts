@@ -32,6 +32,7 @@ export type TRPCContext =
   ReturnType<typeof createContext> extends Promise<infer T> ? T : never;
 export type TRPCProtectedContext = TRPCContext & {
   session: NonNullable<TRPCContext["session"]>;
+  user: NonNullable<TRPCContext["session"]>;
 };
 
 export const api = createTRPCProxyClient<AppRouter>({

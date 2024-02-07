@@ -1,4 +1,4 @@
-import { searchRouter } from "./routers/search";
+import { stuffILikeRouter } from "./routers/stuff-i-like";
 import { createTRPCRouter } from "~/server/api/trpc";
 import { boardRouter } from "./routers/boards";
 
@@ -8,7 +8,7 @@ import { boardRouter } from "./routers/boards";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  search: searchRouter,
+  stuffILike: stuffILikeRouter,
   boards: boardRouter,
 });
 

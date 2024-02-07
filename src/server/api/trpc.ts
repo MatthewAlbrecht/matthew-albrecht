@@ -49,6 +49,7 @@ export const getPageSession = cache(
     } catch (error) {
       console.error("Failed to set session cookie", error);
     }
+    console.log("getPageSession", result);
     return result;
   },
 );
@@ -66,11 +67,11 @@ export const getPageSession = cache(
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const session = await getPageSession();
-
+  const { session, user } = await getPageSession();
   return {
     db,
-    ...session,
+    session,
+    user,
     ...opts,
   };
 };
@@ -131,6 +132,7 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   if (!ctx.session || !ctx.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
+
   return next({
     ctx: {
       // infers the `session` as non-nullable
@@ -139,3 +141,7 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
     },
   });
 });
+
+type ProtectedProcedureUse = (typeof protectedProcedure)["use"];
+export type ProtectedProcedureUseCallback =
+  Parameters<ProtectedProcedureUse>[0];

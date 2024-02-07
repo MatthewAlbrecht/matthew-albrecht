@@ -25,7 +25,7 @@ export default function AskMeAnything() {
     <>
       <form onSubmit={handleFormSubmit} className="flex w-full">
         <Input
-          className="mr-2 h-14 flex-1 rounded-none border-l-0 border-r-0 border-t-0 border-foreground/30 pl-0 text-lg placeholder:text-foreground/30 focus:outline-none"
+          className="mr-2 h-14 flex-1 rounded-none border-l-0 border-r-0 border-t-0 border-foreground/30 pl-0 text-lg focus:outline-none"
           withFocus={false}
           placeholder="Ask me anything..."
           value={input}

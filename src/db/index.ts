@@ -30,9 +30,12 @@ export const lucia = new Lucia(
       },
     },
     getUserAttributes: (attributes) => {
+      console.log("getUserAttributes", attributes);
       return {
         // attributes has the type of DatabaseUserAttributes
         email: attributes.email,
+        // NOTE: I HAVE NO IDEA WHY THIS IS A NUMBER
+        isAdmin: attributes.is_admin === 1,
       };
     },
   },
@@ -47,4 +50,6 @@ declare module "lucia" {
 
 interface DatabaseUserAttributes {
   email: string;
+  // NOTE: I HAVE NO IDEA WHY THIS IS A NUMBER
+  is_admin: number;
 }

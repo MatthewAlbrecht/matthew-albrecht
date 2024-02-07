@@ -22,18 +22,13 @@ const Page = async () => {
       <div className="space-y-2 text-center">
         <h1 className="text-3xl font-bold">Signup</h1>
         <p className="text-gray-500 dark:text-gray-400">
-          Enter your username and password to setup your account
+          Enter your email and password to setup your account
         </p>
       </div>
       <form action={signupUser} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="username">Username</Label>
-          <Input
-            id="username"
-            name="username"
-            placeholder="Username"
-            required
-          />
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" name="email" placeholder="Email" required />
         </div>
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
@@ -75,7 +70,7 @@ async function signupUser(formData: FormData) {
   const hashedPassword = await new Argon2id().hash(password);
   const userId = generateId(15);
 
-  // TODO: check if username is already used
+  // TODO: check if email is already used
   await db.insert(users).values({
     id: userId,
     email,

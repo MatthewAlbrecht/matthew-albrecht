@@ -94,7 +94,7 @@ async function loginUser(formData: FormData) {
       error: "Incorrect username or password",
     };
   }
-
+  console.log("existingUser", existingUser);
   const session = await lucia.createSession(existingUser.id, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
   cookies().set(

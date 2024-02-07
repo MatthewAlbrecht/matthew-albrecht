@@ -8,6 +8,7 @@ import {
   datetime,
   json,
   tinytext,
+  boolean,
 } from "drizzle-orm/mysql-core";
 
 /**
@@ -31,6 +32,7 @@ export const users = mysqlTable("user", {
   hashedPassword: varchar("hashed_password", {
     length: 255,
   }).notNull(),
+  isAdmin: boolean("is_admin").notNull().default(false),
 });
 
 export const userRelations = relations(users, ({ many }) => ({
