@@ -4,25 +4,36 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
 import AskMeAnything from "~/app/_components/ask-me-anything";
+import { IconChevron } from "~/app/_components/ui/icons";
 import {
-  IconChevron,
   NextJsLogo,
   OpenAiLogo,
   ReactLogo,
   TailwindLogo,
   TypeScriptLogo,
-} from "~/app/_components/ui/icons";
+  ClaytonLogo,
+  BeatsByDreLogo,
+  CoachellaLogo,
+  GoldenvoiceLogo,
+  MondoRobotLogo,
+  SpecializedLogo,
+  DiageoLogo,
+  FreeAgencyLogo,
+  ProcoreLogo,
+  OpraLogo,
+  PennMutualLogo,
+} from "~/app/_components/ui/logos";
 import { cn } from "~/lib/utils";
 import Heading from "./_components/ui/heading";
 import { Separator } from "./_components/ui/separator";
 
 export default function Index() {
   const ref = useRef(null);
+  const springConfig = { stiffness: 300, damping: 30, bounce: 10000 };
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  const springConfig = { stiffness: 300, damping: 30, bounce: 10000 };
 
   const translateY = useSpring(
     useTransform(scrollYProgress, [1, 0], [-200, 0]),
@@ -77,7 +88,6 @@ export default function Index() {
             stroke="currentColor"
             className={cn("h-[790px] w-[57px]")}
           >
-            {/* <motion.g></motion.g> */}
             <motion.g style={{ translateY: translateYLineLeft }}>
               <line x1="0.5" y1="265" x2="0.500002" y2="245" />
               <line x1="0.5" y1="239" x2="0.500001" y2="233" />
@@ -394,9 +404,10 @@ export default function Index() {
           <IconChevron className="inline" />
         </Link>
       </div>
-      <div className="flex h-screen items-center justify-center">
+      <section className="flex h-screen items-center justify-center">
         <p>Some stuff will surely go here</p>
-      </div>
+      </section>
+      <BrandsSection />
       <section className="px-6 py-5">
         <Heading>Built With</Heading>
         <div className="grid-cols-main mt-24 grid">
@@ -478,6 +489,72 @@ export default function Index() {
         </div>
       </section>
     </>
+  );
+}
+
+function BrandsSection() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const springConfig = {
+    damping: 100,
+    stiffness: 300,
+    bounce: 100,
+  };
+
+  const translateX = useSpring(
+    useTransform(scrollYProgress, [0, 1], [650, -650]),
+    springConfig,
+  );
+
+  return (
+    <section
+      ref={ref}
+      className="flex flex-col items-center justify-center overflow-x-hidden bg-background-tan px-6 py-8"
+    >
+      <p className="font-bold uppercase opacity-80">Brands I’ve worked on</p>
+      <motion.ul
+        className="mt-8 flex items-center gap-20"
+        style={{ translateX }}
+      >
+        <li>
+          <ClaytonLogo className="h-8" />
+        </li>
+        <li>
+          <GoldenvoiceLogo className="h-6" />
+        </li>
+        <li>
+          <DiageoLogo className="h-4" />
+        </li>
+        <li>
+          <MondoRobotLogo className="h-5" />
+        </li>
+        <li>
+          <CoachellaLogo className="h-4" />
+        </li>
+        <li>
+          <BeatsByDreLogo className="h-8" />
+        </li>
+        <li>
+          <SpecializedLogo className="h-4" />
+        </li>
+        <li>
+          <ProcoreLogo className="h-4" />
+        </li>
+        <li>
+          <OpraLogo className="relative top-0.5 h-5" />
+        </li>
+        <li>
+          <FreeAgencyLogo className="relative top-0.5 h-6" />
+        </li>
+        <li>
+          <PennMutualLogo className="relative bottom-0.5 h-7" />
+        </li>
+      </motion.ul>
+    </section>
   );
 }
 
