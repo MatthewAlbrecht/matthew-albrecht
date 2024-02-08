@@ -133,7 +133,7 @@ function Menu({ pathname }: { pathname: string }) {
             <li className="hover:opacity-[100!important] group-hover:opacity-50">
               <Link
                 className="block w-full"
-                href={"/blog"}
+                href={"/writings"}
                 onClick={handleLinkClick}
               >
                 Writings
