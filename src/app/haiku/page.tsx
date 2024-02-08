@@ -63,19 +63,19 @@ function Pagination() {
   return (
     <div className="flex flex-col">
       <button className="group py-2 pr-6">
-        <div className="h-[2px] w-4 bg-primary-foreground transition-[width] group-hover:w-5" />
+        <div className="h-[2px] w-4 scale-100 transform rounded-md bg-primary-foreground transition-[width] group-hover:w-5" />
       </button>
       <button className="group py-2 pr-6">
-        <div className="h-[2px] w-2 bg-primary-foreground/30 transition-[width] group-hover:w-5" />
+        <div className="h-[2px] w-2 scale-100 transform rounded-md bg-primary-foreground/30 transition-[width] group-hover:w-5" />
       </button>
       <button className="group py-2 pr-6">
-        <div className="h-[2px] w-2 bg-primary-foreground/30 transition-[width] group-hover:w-5" />
+        <div className="h-[2px] w-2 scale-100 transform rounded-md bg-primary-foreground/30 transition-[width] group-hover:w-5" />
       </button>
       <button className="group py-2 pr-6">
-        <div className="h-[2px] w-2 bg-primary-foreground/30 transition-[width] group-hover:w-5" />
+        <div className="h-[2px] w-2 scale-100 transform rounded-md bg-primary-foreground/30 transition-[width] group-hover:w-5" />
       </button>
       <button className="group py-2 pr-6">
-        <div className="h-[2px] w-2 bg-primary-foreground/30 transition-[width] group-hover:w-5" />
+        <div className="h-[2px] w-2 scale-100 transform rounded-md bg-primary-foreground/30 transition-[width] group-hover:w-5" />
       </button>
     </div>
   );

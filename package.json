@@ -37,6 +37,7 @@
     "autoprefixer": "10.4.16",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "cmdk": "^0.2.1",
     "drizzle-orm": "^0.29.3",
     "framer-motion": "^11.0.3",
     "geist": "^1.2.1",

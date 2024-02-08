@@ -125,7 +125,7 @@ function SmallFooter() {
           <Link href="/now">/Now</Link>
         </li>
         <li>
-          <Link href="/blog">/Writings</Link>
+          <Link href="/writings">/Writings</Link>
         </li>
         <li>
           <Link href="/stuff-i-like">/Stuff I Like</Link>

@@ -5,6 +5,7 @@ import { Toaster } from "~/app/_components/ui/sonner";
 import { Providers } from "~/app/_components/providers";
 import Header from "~/app/_components/Header";
 import Footer from "~/app/_components/footer";
+import { CommandMenu } from "./_components/command-menu";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Toaster />
           <Footer />
+          <CommandMenu />
         </Providers>
       </body>
     </html>
