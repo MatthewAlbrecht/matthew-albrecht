@@ -18,6 +18,7 @@ import { api } from "~/trpc/react";
 import { Button } from "../_components/ui/button";
 import { Input } from "../_components/ui/input";
 import { createThingSchema } from "~/lib/types";
+import Heading from "../_components/ui/heading";
 
 export default function StuffILikeForm({}: { id?: number }) {
   // const { data: thingILike } = api.stuffILike.getById.useQuery(
@@ -63,9 +64,7 @@ export default function StuffILikeForm({}: { id?: number }) {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-8 bg-background-tan p-6 pt-10"
         >
-          <h1 className="text-3xl font-bold uppercase tracking-tighter">
-            Thing I Like
-          </h1>
+          <Heading className="text-3xl">Thing I Like</Heading>
           <div className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}

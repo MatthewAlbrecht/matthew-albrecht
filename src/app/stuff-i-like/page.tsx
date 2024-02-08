@@ -1,5 +1,6 @@
 import { api } from "~/trpc/server";
 import DataTable from "./data-table";
+import Heading from "../_components/ui/heading";
 
 export default async function Page() {
   const stuffILike = await api.stuffILike.getAll.query();
@@ -8,9 +9,7 @@ export default async function Page() {
     <div className="min-h-fill px-6 py-4">
       <div className="grid-cols-main grid">
         <div>
-          <h1 className="text-6xl font-medium uppercase leading-none tracking-tight">
-            Stuff I Like
-          </h1>
+          <Heading>Stuff I Like</Heading>
         </div>
         <div></div>
       </div>

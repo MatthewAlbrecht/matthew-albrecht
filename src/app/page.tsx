@@ -4,8 +4,17 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
 import AskMeAnything from "~/app/_components/ask-me-anything";
-import { IconChevron } from "~/app/_components/ui/icons";
+import {
+  IconChevron,
+  NextJsLogo,
+  OpenAiLogo,
+  ReactLogo,
+  TailwindLogo,
+  TypeScriptLogo,
+} from "~/app/_components/ui/icons";
 import { cn } from "~/lib/utils";
+import Heading from "./_components/ui/heading";
+import { Separator } from "./_components/ui/separator";
 
 export default function Index() {
   const ref = useRef(null);
@@ -386,6 +395,86 @@ export default function Index() {
         </Link>
       </div>
       <div className="h-screen"></div>
+      <section className="px-6 py-5">
+        <Heading>Built With</Heading>
+        <div className="grid-cols-main mt-24 grid">
+          <div></div>
+          <div>
+            <Separator className="bg-foreground/10" />
+            <div className="flex items-start justify-between pb-8 pt-10">
+              <h2 className="font-bold uppercase tracking-tight">Big Pieces</h2>
+              <ul className="flex gap-16 text-foreground">
+                <li className="flex flex-col items-center justify-between">
+                  <TypeScriptLogo className="relative top-1 w-9" />
+                  <span className="mt-1 font-medium tracking-tight">
+                    TypeScript
+                  </span>
+                </li>
+                <li className="flex flex-col items-center justify-between">
+                  <ReactLogo className="w-10" />
+                  <span className="mt-1 font-medium tracking-tight">React</span>
+                </li>
+                <li className="flex flex-col items-center justify-between">
+                  <NextJsLogo className="relative top-1 w-10" />
+                  <span className="mt-1 font-medium tracking-tight">
+                    NextJS
+                  </span>
+                </li>
+                <li className="flex flex-col items-center justify-between">
+                  <TailwindLogo className="relative top-2 w-12" />
+                  <span className="mt-1 font-medium tracking-tight">
+                    Tailwind
+                  </span>
+                </li>
+                <li className="flex flex-col items-center justify-between">
+                  <OpenAiLogo className="relative top-1 w-10" />
+                  <span className="mt-1 font-medium tracking-tight">
+                    OpenAI
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <Separator className="bg-foreground/10" />
+            <div className="flex items-start justify-between pb-8 pt-10">
+              <h2 className="font-bold uppercase tracking-tight">
+                The Nitty Gritty
+              </h2>
+              <ul className="grid grid-cols-[repeat(5,min-content)] gap-x-[3.0625rem] gap-y-4">
+                <li className="whitespace-nowrap font-medium tracking-tight">
+                  tRPC
+                </li>
+                <li className="whitespace-nowrap font-medium tracking-tight">
+                  Tanstack Query
+                </li>
+                <li className="whitespace-nowrap font-medium tracking-tight">
+                  shadcn
+                </li>
+                <li className="whitespace-nowrap font-medium tracking-tight">
+                  PlanetScale
+                </li>
+                <li className="whitespace-nowrap font-medium tracking-tight">
+                  Vercel
+                </li>
+                <li className="whitespace-nowrap font-medium tracking-tight">
+                  Zod
+                </li>
+                <li className="whitespace-nowrap font-medium tracking-tight">
+                  Framer Motion
+                </li>
+                <li className="whitespace-nowrap font-medium tracking-tight">
+                  Lucia
+                </li>
+                <li className="whitespace-nowrap font-medium tracking-tight">
+                  UploadThing
+                </li>
+                <li className="whitespace-nowrap font-medium tracking-tight">
+                  Drizzle
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
