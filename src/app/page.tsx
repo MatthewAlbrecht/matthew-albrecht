@@ -524,22 +524,22 @@ function BrandsSection() {
           <ClaytonLogo className="h-8" />
         </li>
         <li>
-          <GoldenvoiceLogo className="h-6" />
+          <GoldenvoiceLogo className="h-7" />
         </li>
         <li>
-          <DiageoLogo className="h-4" />
+          <DiageoLogo className="h-5" />
         </li>
         <li>
           <MondoRobotLogo className="h-5" />
         </li>
         <li>
-          <CoachellaLogo className="h-4" />
+          <CoachellaLogo className="h-[1.375rem]" />
         </li>
         <li>
           <BeatsByDreLogo className="h-8" />
         </li>
         <li>
-          <SpecializedLogo className="h-4" />
+          <SpecializedLogo className="h-[1.25rem]" />
         </li>
         <li>
           <ProcoreLogo className="h-4" />
