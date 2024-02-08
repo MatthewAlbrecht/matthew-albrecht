@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Skeleton } from "~/components/ui/skeleton";
+import { Skeleton } from "~/app/_components/ui/skeleton";
 
 export default function Authentication({
   children,

@@ -5,7 +5,7 @@ import { authorizeRoles } from "~/trpc/middleware";
 export const boardRouter = createTRPCRouter({
   getRecentBoards: protectedProcedure
     .use(authorizeRoles([Role.Admin]))
-    .query(({ ctx }) => {
+    .query(({}) => {
       return { success: true };
     }),
 });

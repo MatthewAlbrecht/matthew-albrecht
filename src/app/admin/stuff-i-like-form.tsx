@@ -1,6 +1,6 @@
 import React from "react";
 
-import { z } from "zod";
+import { type z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
@@ -19,7 +19,7 @@ import { Button } from "../_components/ui/button";
 import { Input } from "../_components/ui/input";
 import { createThingSchema } from "~/lib/types";
 
-export default function StuffILikeForm({ id }: { id?: number }) {
+export default function StuffILikeForm({}: { id?: number }) {
   // const { data: thingILike } = api.stuffILike.getById.useQuery(
   //   {
   //     id: id ?? -1,
