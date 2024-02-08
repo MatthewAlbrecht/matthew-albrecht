@@ -132,6 +132,9 @@ const config = {
         fill: "var(--fill-height)",
         "fill-splash": "var(--fill-height-splash)",
       },
+      height: {
+        fill: "var(--fill-height)",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
