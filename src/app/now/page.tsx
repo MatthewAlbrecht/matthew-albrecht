@@ -1,3 +1,7 @@
 export default async function Page() {
-  return <pre>Now Page</pre>;
+  return (
+    <div className="flex min-h-fill items-center justify-center">
+      <p>Some stuff will surely go here</p>
+    </div>
+  );
 }
