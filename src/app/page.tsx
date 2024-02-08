@@ -394,7 +394,9 @@ export default function Index() {
           <IconChevron className="inline" />
         </Link>
       </div>
-      <div className="h-screen"></div>
+      <div className="flex h-screen items-center justify-center">
+        <p>Some stuff will surely go here</p>
+      </div>
       <section className="px-6 py-5">
         <Heading>Built With</Heading>
         <div className="grid-cols-main mt-24 grid">
