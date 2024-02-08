@@ -37,7 +37,7 @@ export default function Page() {
           <Blob
             key={JSON.stringify(pathVariants.animate.d)}
             pathVariants={pathVariants}
-            className="absolute bottom-6 left-[10%] right-[10%] top-6 text-foreground/5"
+            className="absolute bottom-6 left-[10%] right-[10%] top-6 h-[90%] w-[80%] text-foreground/5"
           />
         ))}
         <div className="relative flex h-full w-[80%] flex-col justify-center space-y-6 text-center font-medium">
@@ -96,6 +96,7 @@ export interface BlobProps extends SVGMotionProps<SVGSVGElement> {
 function Blob({ className, pathVariants, ...props }: BlobProps) {
   return (
     <motion.svg
+      preserveAspectRatio="none"
       viewBox="0 0 1036 519"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
