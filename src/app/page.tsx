@@ -26,6 +26,7 @@ import {
 import { cn } from "~/lib/utils";
 import Heading from "./_components/ui/heading";
 import { Separator } from "./_components/ui/separator";
+import { LineFactory } from "./_components/ui/line";
 
 export default function Index() {
   const ref = useRef(null);
@@ -404,8 +405,33 @@ export default function Index() {
           <IconChevron className="inline" />
         </Link>
       </div>
-      <section className="flex h-screen items-center justify-center">
+      <section className="relative flex h-screen items-center justify-center">
         <p>Some stuff will surely go here</p>
+        <div className="absolute left-0 top-0 flex gap-x-[3px]">
+          <LineFactory
+            className="stroke-[1px] text-[#BFB1B1] opacity-30"
+            lineCount={100}
+            lineConfig={{
+              lineGap: 3,
+              height: 880,
+              gapValues: [0],
+              lengthValues: [400, 800],
+              // lineType: "decay-up-down",
+            }}
+          />
+          <LineFactory
+            className="stroke-[1px] text-[#D44A1E]"
+            lineCount={2}
+            lineConfig={{
+              lineGap: 3,
+              height: 880,
+              gapValues: [5, 30, 80, 8, 15, 100],
+              lengthValues: [2, 400],
+              baselineOpacity: 0.2,
+              lineType: "decay-down",
+            }}
+          />
+        </div>
       </section>
       <BrandsSection />
       <section className="px-6 py-5">
@@ -509,6 +535,8 @@ function BrandsSection() {
     useTransform(scrollYProgress, [0, 1], [650, -650]),
     springConfig,
   );
+
+  console.log("TX", scrollYProgress);
 
   return (
     <section
