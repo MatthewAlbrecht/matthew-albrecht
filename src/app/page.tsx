@@ -416,7 +416,6 @@ export default function Index() {
               height: 880,
               gapValues: [0],
               lengthValues: [400, 800],
-              // lineType: "decay-up-down",
             }}
           />
           <LineFactory
@@ -428,7 +427,6 @@ export default function Index() {
               gapValues: [5, 30, 80, 8, 15, 100],
               lengthValues: [2, 400],
               baselineOpacity: 0.2,
-              lineType: "decay-down",
             }}
           />
         </div>
