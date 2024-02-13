@@ -144,13 +144,21 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "up-and-right": {
+          "0%": { transform: "translateX(0) translateY(0)" },
+          "100%": {
+            transform: "translateX(30px) translateY(-30px)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "up-and-right": "up-and-right 0.3s ease-out",
       },
       gridTemplateColumns: {
         main: "39% 61%",
+        resume: "100px 250px auto",
       },
     },
   },
