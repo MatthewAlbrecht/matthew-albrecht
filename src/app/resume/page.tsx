@@ -5,7 +5,13 @@ import Heading from "../_components/ui/heading";
 import { IconArrowDiagonal, IconDownload } from "../_components/ui/icons";
 import { Separator } from "../_components/ui/separator";
 import { type SetStateAction, useState, type Dispatch } from "react";
-import data, { type ResumeSection } from "./data";
+import data, {
+  type Bullet,
+  categories,
+  skills,
+  type CategoryId,
+  type ResumeSection,
+} from "./data";
 
 export default function Page() {
   const [filter, setFilter] = useState<CategoryId>("showAll");
@@ -33,7 +39,7 @@ export default function Page() {
         </div>
       </div>
       <div className="mt-16 grid grid-cols-main">
-        <BioSection className="mr-24" />
+        <BioSection filter={filter} className="mr-24" />
         <ContentSection filter={filter} setFilter={setFilter} />
       </div>
     </div>
@@ -49,6 +55,12 @@ function ContentSection({
   filter: CategoryId;
   setFilter: Dispatch<SetStateAction<CategoryId>>;
 }) {
+  function hasBullets({ bullets }: ResumeSection) {
+    return (
+      filter === "showAll" ||
+      bullets.some((bullet) => bullet.keywords.includes(filter))
+    );
+  }
   return (
     <section className={cn("", className)} {...props}>
       <div className="flex items-end justify-between">
@@ -72,15 +84,25 @@ function ContentSection({
       </div>
       <Separator className="my-5 bg-foreground/10" />
       <div className="grid-cols-resume grid">
-        {data.map((resume) => (
-          <ResumeSection key={resume.id} resume={resume} />
+        {data.filter(hasBullets).map((resume) => (
+          <ResumeSection key={resume.id} resume={resume} filter={filter} />
         ))}
       </div>
     </section>
   );
 }
 
-function ResumeSection({ resume }: { resume: ResumeSection }) {
+function ResumeSection({
+  resume,
+  filter,
+}: {
+  resume: ResumeSection;
+  filter: CategoryId;
+}) {
+  function hasKeyword(bullet: Bullet) {
+    return filter === "showAll" || bullet.keywords.includes(filter);
+  }
+
   return (
     <>
       <div className="w-[100px] text-sm font-medium text-secondary-foreground">
@@ -103,9 +125,9 @@ function ResumeSection({ resume }: { resume: ResumeSection }) {
         )}
       </div>
       <ul className="max-w-[100ch] flex-shrink list-disc">
-        {resume.bullets.map((bullet, i) => (
+        {resume.bullets.filter(hasKeyword).map((bullet, i) => (
           <li key={i} className="pl-2 -indent-2">
-            {bullet}
+            {bullet.text}
           </li>
         ))}
       </ul>
@@ -114,14 +136,17 @@ function ResumeSection({ resume }: { resume: ResumeSection }) {
   );
 }
 
-function BioSection({ className, ...props }: React.ComponentProps<"section">) {
+function BioSection({
+  className,
+  filter,
+  ...props
+}: React.ComponentProps<"section"> & { filter: CategoryId }) {
   return (
     <section className={className} {...props}>
       <div className="flex items-end justify-between">
         <h2 className="font-medium uppercase">Bio</h2>
       </div>
       <Separator className="my-5 bg-foreground/10" />
-
       <div>
         <p>
           Matt Albrecht is a Senior Full Stack Software Engineer with 1,092
@@ -137,57 +162,24 @@ function BioSection({ className, ...props }: React.ComponentProps<"section">) {
         <p className="mb-2 mt-6 gap-x-6 font-medium text-secondary-foreground">
           Skills
         </p>
-        <p>{skills.join(", ")}</p>
+        <p>
+          {skills.map((skill) => (
+            <span
+              className={cn(
+                "inline transition-opacity duration-300 ease-in-out",
+                !skill.keywords.includes(filter) && "opacity-30",
+              )}
+            >
+              {skill.name},&emsp;
+            </span>
+          ))}
+        </p>
 
         <div></div>
       </div>
     </section>
   );
 }
-const skills = [
-  "TypeScript",
-  "JavaScript",
-  "Python",
-  "HTML",
-  "CSS",
-  "React",
-  "NextJS",
-  "GraphQL",
-  "Apollo",
-  "NodeJS",
-  "Vue",
-  "Nuxt",
-  "Astro",
-  "Chrome Manifest v3",
-  "NodeJS",
-  "tRPC",
-  "Prisma",
-  "PostgreSQL",
-  "Redis",
-  "MongoDB",
-  "SQL",
-  "PlanetScale",
-  "React Testing Library",
-  "Jest",
-  "TailwindCSS",
-  "CSS-in-JS",
-  "Vercel",
-  "Netlify",
-  "Ariadne",
-  "Flask",
-  "Starlette",
-  "pytest",
-] as const;
-
-const categories = [
-  { id: "showAll", label: "Show All" },
-  { id: "Frontend", label: "Frontend" },
-  { id: "Backend", label: "Backend" },
-  { id: "React", label: "React" },
-  { id: "Team Lead", label: "Team Lead" },
-] as const;
-
-type CategoryId = (typeof categories)[number]["id"];
 
 function FilterButton({
   category,
