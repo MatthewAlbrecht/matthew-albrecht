@@ -25,14 +25,10 @@ const pathVariantOptions = [
 ];
 
 export default function Page() {
-  const haiku = haikus[0];
+  const haiku = haikus[Math.floor(Math.random() * haikus.length)]!;
   return (
     <>
-      <div className="h-fill relative flex flex-col items-center justify-center px-6 ">
-        <div className="absolute left-6 top-1/2 -translate-y-1/2 transform">
-          <Pagination />
-        </div>
-
+      <div className="relative flex h-fill flex-col items-center justify-center px-6 ">
         {pathVariantOptions.map((pathVariants) => (
           <Blob
             key={JSON.stringify(pathVariants.animate.d)}
@@ -56,28 +52,6 @@ export default function Page() {
       </div>
       <style>{css}</style>
     </>
-  );
-}
-
-function Pagination() {
-  return (
-    <div className="flex flex-col">
-      <button className="group py-2 pr-6">
-        <div className="h-[2px] w-4 scale-100 transform rounded-md bg-primary-foreground transition-[width] group-hover:w-5" />
-      </button>
-      <button className="group py-2 pr-6">
-        <div className="h-[2px] w-2 scale-100 transform rounded-md bg-primary-foreground/30 transition-[width] group-hover:w-5" />
-      </button>
-      <button className="group py-2 pr-6">
-        <div className="h-[2px] w-2 scale-100 transform rounded-md bg-primary-foreground/30 transition-[width] group-hover:w-5" />
-      </button>
-      <button className="group py-2 pr-6">
-        <div className="h-[2px] w-2 scale-100 transform rounded-md bg-primary-foreground/30 transition-[width] group-hover:w-5" />
-      </button>
-      <button className="group py-2 pr-6">
-        <div className="h-[2px] w-2 scale-100 transform rounded-md bg-primary-foreground/30 transition-[width] group-hover:w-5" />
-      </button>
-    </div>
   );
 }
 

@@ -79,6 +79,6 @@ const haikus = [
     date: "2022-01-10",
     location: "Mexico",
   },
-] as const;
+];
 
 export default haikus;

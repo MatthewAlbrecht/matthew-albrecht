@@ -167,7 +167,10 @@ function BioSection({
             <span
               className={cn(
                 "inline transition-opacity duration-300 ease-in-out",
-                !skill.keywords.includes(filter) && "opacity-30",
+                !skill.keywords.includes(filter) &&
+                  filter !== "showAll" &&
+                  filter !== "Team Lead" &&
+                  "opacity-30",
               )}
             >
               {skill.name},&emsp;
