@@ -8,7 +8,6 @@ export default async function Page() {
   const { session, user } = await getPageSession();
 
   if (!user || !session || !user.isAdmin) {
-    console.log("USER", user);
     redirect("/");
   }
 
@@ -16,7 +15,7 @@ export default async function Page() {
     <div className="mb-12 min-h-fill px-6">
       <Heading>Admin Portal</Heading>
 
-      <div className="grid-cols-main mt-36 grid">
+      <div className="mt-36 grid grid-cols-main">
         <AdminStuffILike />
       </div>
     </div>

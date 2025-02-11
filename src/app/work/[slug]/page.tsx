@@ -16,13 +16,13 @@ export default function Page({
 
   return (
     <div className="flex min-h-fill flex-col justify-between px-6 py-4">
-      <div className="grid-cols-main grid">
+      <div className="grid grid-cols-main">
         <div>
           <Heading>Work</Heading>
         </div>
         <div></div>
       </div>
-      <Chrome experience={experience} />;
+      <Chrome experience={experience} />
     </div>
   );
 }

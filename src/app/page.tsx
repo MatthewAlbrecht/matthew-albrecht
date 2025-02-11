@@ -399,10 +399,10 @@ export default function Index() {
         </div>
         <Link
           href="/haiku"
-          className="absolute bottom-12 right-12 flex size-32 origin-center items-center justify-center rounded-full bg-background-tan transition-all duration-700 hover:size-[8.5rem]"
+          className="group absolute bottom-12 right-12 flex items-center justify-center bg-background-tan transition-all duration-700 px-2 py-0.5"
         >
           <span className="pr-2 text-sm font-bold">Haiku</span>
-          <IconChevron className="inline" />
+          <IconChevron className="relative left-0 h-4 w-4 duration-200 group-hover:left-1 group-hover:transform" />
         </Link>
       </div>
       <section className="relative flex h-screen items-center justify-center">
@@ -434,7 +434,7 @@ export default function Index() {
       <BrandsSection />
       <section className="px-6 py-5">
         <Heading>Built With</Heading>
-        <div className="grid-cols-main mt-24 grid">
+        <div className="mt-24 grid grid-cols-main">
           <div></div>
           <div>
             <Separator className="bg-foreground/10" />
